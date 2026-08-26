@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output and coverage
+dist/
+build/
+out/
+coverage/
+.cache/
+.next/
+
+# Environment variables and local configuration
+.env
+.env.*
+!.env.example
+*.local
+
+# Credentials, tokens, API keys, and private keys
+credentials.yaml
+credentials.yml
+secrets.yaml
+secrets.yml
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.token
+
+# Xano local authentication and tooling
+.xano/
+xano-tools/
+
+# Logs and temporary files
+*.log
+logs/
+tmp/
+temp/
+*.tmp
+
+# Editor and operating-system files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
