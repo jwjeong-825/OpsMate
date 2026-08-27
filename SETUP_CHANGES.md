@@ -105,6 +105,15 @@
 - Xano Static Host Build ID `3` (`ui-copy-refresh-v2`)을 dev와 production에 배포했다.
 - dev와 production에서 분석 생성, 결과 개수 제한, 기록, 상세, resolve 및 새로고침 후 상태 영속성을 확인했다.
 
+## 2026-08-27 — 최종 MVP UI/UX polish
+
+- Hero 문구를 최종 제출용 카피로 변경하고 desktop과 390px mobile에서 자연스러운 2줄 headline이 유지되도록 타이포그래피를 조정했다.
+- 시각적 피드백 없이 중복되던 수동 History 새로고침 버튼을 제거했다.
+- 초기 로드, Incident 생성 성공 후, resolve 성공 후 `GET /incidents`를 다시 실행하며 캐시를 사용하지 않도록 설정했다.
+- AI Agent가 설명은 자연스러운 한국어로 작성하되 오류 메시지, 명령어, 코드, 기술명, 서비스명, 제품명은 원문을 유지하도록 prompt를 변경했다.
+- Xano Static Host Build ID `6` (`final-mvp-polish-v3`)을 dev와 production에 배포했다.
+- production에서 분석 생성, 한국어 AI 결과, History 자동 갱신, 상세 조회, dialog 닫기/재열기, resolve, desktop/mobile layout 및 console 오류 부재를 확인했다.
+
 ## 프로젝트 종료 시 안전한 제거 및 원복
 
 제거 전에는 필요한 소스, 문서, Xano Workspace 상태를 백업하고 각 경로를 다시 확인한다.

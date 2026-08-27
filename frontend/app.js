@@ -8,7 +8,6 @@ const formError = document.querySelector("#form-error");
 const analysisPanel = document.querySelector("#analysis-panel");
 const historyList = document.querySelector("#history-list");
 const historyError = document.querySelector("#history-error");
-const refreshButton = document.querySelector("#refresh-button");
 const dialog = document.querySelector("#incident-dialog");
 const dialogTitle = document.querySelector("#dialog-title");
 const dialogContent = document.querySelector("#dialog-content");
@@ -34,6 +33,7 @@ function clearError(target) {
 async function apiRequest(path, options = {}) {
   const response = await fetch(`${API_BASE}${path}`, {
     ...options,
+    cache: "no-store",
     headers: {
       "Content-Type": "application/json",
       ...(options.headers || {}),
@@ -99,7 +99,7 @@ function formatDate(timestamp) {
 }
 
 function historySummary(incident) {
-  return incident.ai_summary || incident.raw_error || "No summary";
+  return incident.ai_summary || incident.raw_error || "요약이 없습니다.";
 }
 
 function renderHistory(incidents) {
@@ -126,14 +126,11 @@ function renderHistory(incidents) {
 
 async function loadHistory() {
   clearError(historyError);
-  refreshButton.disabled = true;
   try {
     const incidents = await apiRequest("/incidents");
     renderHistory(incidents);
   } catch (error) {
     showError(historyError, `인시던트 기록을 불러오지 못했습니다. ${error.message}`);
-  } finally {
-    refreshButton.disabled = false;
   }
 }
 
@@ -235,7 +232,6 @@ form.addEventListener("submit", async (event) => {
   }
 });
 
-refreshButton.addEventListener("click", loadHistory);
 dialogClose.addEventListener("click", () => dialog.close());
 dialog.addEventListener("click", (event) => {
   if (event.target === dialog) dialog.close();
