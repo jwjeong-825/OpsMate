@@ -85,6 +85,18 @@
 - `severity`는 `low`, `medium`, `high`, `critical`만 허용하며 JSON parsing 또는 구조 검증 실패 시 레코드를 저장하지 않고 오류를 반환한다.
 - 라이브 API에서 nginx 502 오류 분석과 DB 영속 저장을 확인했다.
 
+## 2026-08-27 — Frontend 및 Xano Static Hosting 배포
+
+- 별도 frontend framework나 패키지 설치 없이 `frontend/`에 HTML, CSS, JavaScript SPA를 추가했다.
+- Xano Workspace ID `1`에 `opsmate` Static Host를 생성했다.
+- 배포된 build:
+  - Build ID: `1`
+  - Build name: `4012f5e`
+- Dev URL: `https://opsmate-dev-fdab0e-xq4b-bkh8-ih5r.k7.xano.io`
+- Production URL: `https://opsmate-prod-fdab0e-xq4b-bkh8-ih5r.k7.xano.io`
+- production에서 AI 분석, history, detail, resolve, 새로고침 영속성과 브라우저 console 오류 부재를 확인했다.
+- Static Host에는 공개 frontend 파일 3개만 업로드했으며 credential이나 secret은 포함하지 않았다.
+
 ## 프로젝트 종료 시 안전한 제거 및 원복
 
 제거 전에는 필요한 소스, 문서, Xano Workspace 상태를 백업하고 각 경로를 다시 확인한다.
