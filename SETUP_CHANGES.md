@@ -61,6 +61,21 @@
 - GitHub 저장소 생성, 원격 연결, 커밋 및 push는 수행하지 않았다.
 - Xano Workspace와 OpsMate 기능 코드는 변경하지 않았다.
 
+## 2026-08-27 — Incident 기본 백엔드 구현
+
+- Xano Workspace ID `1`의 라이브 `v1` 브랜치에 OpsMate 전용 객체를 추가했다.
+- 추가된 Xano 객체:
+  - `incident` 테이블
+  - `OpsMate` API 그룹 (`api:opsmate`)
+  - `POST /incidents`
+  - `GET /incidents`
+  - `GET /incidents/{incident_id}`
+  - `PATCH /incidents/{incident_id}`
+- 기존 Xano Quick Start 테이블, 인증 API, 함수 및 AI 예제 객체는 수정하거나 삭제하지 않았다.
+- XanoScript 원본은 저장소의 `xano/` 폴더에서 관리한다.
+- 라이브 API에서 생성, 목록, 상세, 필수값 검증, 404, resolve 및 반복 resolve 멱등성을 확인했다.
+- 실제 Xano 인증정보나 토큰은 저장소에 기록하지 않았다.
+
 ## 프로젝트 종료 시 안전한 제거 및 원복
 
 제거 전에는 필요한 소스, 문서, Xano Workspace 상태를 백업하고 각 경로를 다시 확인한다.
@@ -74,4 +89,3 @@
 6. Codex를 다시 시작해 Xano MCP가 더 이상 로드되지 않는지 확인한다.
 
 > 실제 제거 작업은 삭제 대상과 Git 상태를 사용자에게 먼저 보여주고 명시적 승인을 받은 뒤 수행한다.
-
