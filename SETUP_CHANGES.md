@@ -76,6 +76,15 @@
 - 라이브 API에서 생성, 목록, 상세, 필수값 검증, 404, resolve 및 반복 resolve 멱등성을 확인했다.
 - 실제 Xano 인증정보나 토큰은 저장소에 기록하지 않았다.
 
+## 2026-08-27 — Xano AI Incident 분석 연결
+
+- Xano의 내장 `xano-free` provider를 사용하는 `OpsMate Incident Analyst` agent를 추가했다.
+- 별도 유료 AI 서비스 가입, 외부 API Key 생성 또는 Xano 환경변수 추가는 필요하지 않았다.
+- `POST /incidents`가 Xano backend 안에서 AI 분석을 실행하고 JSON 결과를 검증한 뒤 Incident를 저장하도록 변경했다.
+- AI 출력은 `ai_summary`, `possible_causes`, `recommended_actions`, `severity`로 제한한다.
+- `severity`는 `low`, `medium`, `high`, `critical`만 허용하며 JSON parsing 또는 구조 검증 실패 시 레코드를 저장하지 않고 오류를 반환한다.
+- 라이브 API에서 nginx 502 오류 분석과 DB 영속 저장을 확인했다.
+
 ## 프로젝트 종료 시 안전한 제거 및 원복
 
 제거 전에는 필요한 소스, 문서, Xano Workspace 상태를 백업하고 각 경로를 다시 확인한다.
