@@ -97,6 +97,14 @@
 - production에서 AI 분석, history, detail, resolve, 새로고침 영속성과 브라우저 console 오류 부재를 확인했다.
 - Static Host에는 공개 frontend 파일 3개만 업로드했으며 credential이나 secret은 포함하지 않았다.
 
+## 2026-08-27 — 제출 전 UI 문구 및 AI 응답 길이 정리
+
+- 메인 헤드라인과 서브카피를 한국어 제출용 문구로 변경하고, 화면의 장애 관련 용어를 `오류`와 `인시던트`로 통일했다.
+- 기존 레이아웃, API 구조, Incident 흐름 및 Xano AI 분석 방식은 유지했다.
+- AI prompt에 요약 2~3문장, 가능한 원인 최대 3개, 권장 해결 순서 최대 3개 제한을 추가했다.
+- Xano Static Host Build ID `3` (`ui-copy-refresh-v2`)을 dev와 production에 배포했다.
+- dev와 production에서 분석 생성, 결과 개수 제한, 기록, 상세, resolve 및 새로고침 후 상태 영속성을 확인했다.
+
 ## 프로젝트 종료 시 안전한 제거 및 원복
 
 제거 전에는 필요한 소스, 문서, Xano Workspace 상태를 백업하고 각 경로를 다시 확인한다.

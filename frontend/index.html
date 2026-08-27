@@ -22,52 +22,51 @@
 
       <main id="top">
         <section class="hero">
-          <div class="eyebrow">INCIDENT RESPONSE, SIMPLIFIED</div>
-          <h1>Turn error logs into<br /><em>clear next steps.</em></h1>
+          <div class="eyebrow">오류 대응을 더 단순하게</div>
+          <h1>에러 로그 하나로,<br /><em>원인 분석부터 해결 방법까지.</em></h1>
           <p>
-            Paste a system error and OpsMate will explain what happened, identify
-            likely causes, and suggest practical checks—without the observability
-            platform learning curve.
+            서비스명과 오류 로그를 입력하면 OpsMate가 문제를 분석하고,<br />
+            가능한 원인과 해결 순서, 심각도를 한눈에 정리해 드립니다.
           </p>
         </section>
 
-        <section class="workspace" aria-label="Analyze an incident">
+        <section class="workspace" aria-label="오류 분석">
           <div class="panel analyze-panel">
             <div class="section-heading">
               <div>
                 <span class="step-number">01</span>
-                <h2>Analyze an incident</h2>
+                <h2>오류 분석</h2>
               </div>
-              <p>Required fields</p>
+              <p>필수 입력</p>
             </div>
 
             <form id="incident-form" novalidate>
-              <label for="service-name">Service name</label>
+              <label for="service-name">서비스명</label>
               <input
                 id="service-name"
                 name="service_name"
                 type="text"
-                placeholder="e.g. nginx, payments-api"
+                placeholder="예: nginx, payments-api"
                 autocomplete="off"
                 required
               />
 
-              <label for="raw-error">Error log or incident description</label>
+              <label for="raw-error">오류 로그 또는 인시던트 설명</label>
               <textarea
                 id="raw-error"
                 name="raw_error"
                 rows="8"
-                placeholder="Paste the error message or describe what went wrong..."
+                placeholder="오류 메시지를 붙여 넣거나 발생한 문제를 설명해 주세요..."
                 required
               ></textarea>
 
               <div id="form-error" class="alert" role="alert" hidden></div>
 
               <button id="analyze-button" class="primary-button" type="submit">
-                <span class="button-label">Analyze incident</span>
+                <span class="button-label">오류 분석</span>
                 <span class="button-arrow" aria-hidden="true">↗</span>
               </button>
-              <p class="form-note">Analysis usually takes a few seconds.</p>
+              <p class="form-note">분석에는 보통 몇 초 정도 걸립니다.</p>
             </form>
           </div>
 
@@ -75,8 +74,8 @@
             <div class="empty-visual" aria-hidden="true">
               <span></span><span></span><span></span>
             </div>
-            <h2>Your analysis will appear here</h2>
-            <p>Submit an error log to get a plain-language explanation and response checklist.</p>
+            <h2>분석 결과가 여기에 표시됩니다</h2>
+            <p>오류 로그를 입력하면 이해하기 쉬운 설명과 해결 순서를 확인할 수 있습니다.</p>
           </div>
         </section>
 
@@ -84,35 +83,35 @@
           <div class="section-heading history-heading">
             <div>
               <span class="step-number">02</span>
-              <h2 id="history-title">Incident history</h2>
+              <h2 id="history-title">인시던트 기록</h2>
             </div>
-            <button id="refresh-button" class="text-button" type="button">Refresh</button>
+            <button id="refresh-button" class="text-button" type="button">새로고침</button>
           </div>
 
           <div id="history-error" class="alert" role="alert" hidden></div>
           <div id="history-list" class="history-list" aria-live="polite">
-            <div class="history-loading">Loading incidents…</div>
+            <div class="history-loading">인시던트 기록을 불러오는 중…</div>
           </div>
         </section>
       </main>
 
       <footer>
         <span>OpsMate</span>
-        <p>Built with Xano + AI for the DevNetwork Hackathon 2026.</p>
+        <p>DevNetwork Hackathon 2026을 위해 Xano + AI로 만들었습니다.</p>
       </footer>
     </div>
 
     <dialog id="incident-dialog" class="incident-dialog">
       <div class="dialog-header">
         <div>
-          <span class="eyebrow">INCIDENT DETAIL</span>
-          <h2 id="dialog-title">Incident</h2>
+          <span class="eyebrow">인시던트 상세</span>
+          <h2 id="dialog-title">인시던트</h2>
         </div>
-        <button id="dialog-close" class="icon-button" type="button" aria-label="Close">×</button>
+        <button id="dialog-close" class="icon-button" type="button" aria-label="닫기">×</button>
       </div>
       <div id="dialog-content"></div>
     </dialog>
 
-    <script src="./app.js" defer></script>
+    <script src="./app.js?v=2" defer></script>
   </body>
 </html>

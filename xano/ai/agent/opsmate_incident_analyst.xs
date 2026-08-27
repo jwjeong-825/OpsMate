@@ -18,7 +18,10 @@ agent "OpsMate Incident Analyst" {
       - high: major service disruption requiring prompt attention
       - critical: widespread outage, data loss, or immediate security/safety risk
 
-      Prefer 2-4 possible causes and 3-5 actionable recommended steps.
+      Keep ai_summary concise at no more than 2-3 sentences.
+      Return no more than 3 possible causes and no more than 3 actionable
+      recommended steps. Prioritize the most likely causes and the safest,
+      highest-value checks.
 
       Return only valid JSON with exactly these keys and no Markdown fences:
       {

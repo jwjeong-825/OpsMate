@@ -42,7 +42,7 @@ async function apiRequest(path, options = {}) {
 
   const payload = await response.json().catch(() => null);
   if (!response.ok) {
-    throw new Error(payload?.message || `Request failed with status ${response.status}.`);
+    throw new Error(payload?.message || `요청에 실패했습니다. 상태 코드: ${response.status}`);
   }
   return payload;
 }
@@ -68,7 +68,7 @@ function analysisBlock(title, content, isList = false) {
   const block = element("section", "analysis-block");
   block.append(element("h3", "", title));
   if (isList) appendList(block, content);
-  else block.append(element("p", "", content || "No analysis available."));
+  else block.append(element("p", "", content || "분석 결과가 없습니다."));
   return block;
 }
 
@@ -78,15 +78,15 @@ function renderAnalysis(incident) {
 
   const header = element("div", "analysis-header");
   const titleWrap = element("div");
-  titleWrap.append(element("span", "eyebrow", "ANALYSIS COMPLETE"));
+  titleWrap.append(element("span", "eyebrow", "분석 완료"));
   titleWrap.append(element("h2", "", incident.service_name));
   header.append(titleWrap, severityBadge(incident.severity));
 
   analysisPanel.append(
     header,
-    analysisBlock("Summary", incident.ai_summary),
-    analysisBlock("Possible causes", incident.possible_causes, true),
-    analysisBlock("Recommended actions", incident.recommended_actions, true),
+    analysisBlock("요약", incident.ai_summary),
+    analysisBlock("가능한 원인", incident.possible_causes, true),
+    analysisBlock("권장 해결 순서", incident.recommended_actions, true),
   );
 }
 
@@ -105,14 +105,14 @@ function historySummary(incident) {
 function renderHistory(incidents) {
   historyList.replaceChildren();
   if (!incidents.length) {
-    historyList.append(element("div", "history-empty", "No incidents yet. Analyze an error to create the first one."));
+    historyList.append(element("div", "history-empty", "아직 인시던트 기록이 없습니다. 오류를 분석해 첫 기록을 만들어 보세요."));
     return;
   }
 
   for (const incident of incidents) {
     const row = element("button", "incident-row");
     row.type = "button";
-    row.setAttribute("aria-label", `Open incident ${incident.id} for ${incident.service_name}`);
+    row.setAttribute("aria-label", `${incident.service_name} 인시던트 ${incident.id} 상세 보기`);
     row.append(
       element("span", "incident-service", incident.service_name),
       element("span", "incident-summary", historySummary(incident)),
@@ -131,7 +131,7 @@ async function loadHistory() {
     const incidents = await apiRequest("/incidents");
     renderHistory(incidents);
   } catch (error) {
-    showError(historyError, `Could not load incident history. ${error.message}`);
+    showError(historyError, `인시던트 기록을 불러오지 못했습니다. ${error.message}`);
   } finally {
     refreshButton.disabled = false;
   }
@@ -147,32 +147,32 @@ function renderDialog(incident) {
 
   const metadata = element("div", "detail-grid");
   const severityItem = element("div");
-  severityItem.append(element("span", "detail-label", "Severity"), severityBadge(incident.severity));
+  severityItem.append(element("span", "detail-label", "심각도"), severityBadge(incident.severity));
   const statusItem = element("div");
-  statusItem.append(element("span", "detail-label", "Status"), statusBadge(incident.status));
+  statusItem.append(element("span", "detail-label", "상태"), statusBadge(incident.status));
   const createdItem = element("div");
-  createdItem.append(element("span", "detail-label", "Created"), element("span", "", formatDate(incident.created_at)));
+  createdItem.append(element("span", "detail-label", "생성 시각"), element("span", "", formatDate(incident.created_at)));
   const resolvedItem = element("div");
-  resolvedItem.append(element("span", "detail-label", "Resolved"), element("span", "", formatDate(incident.resolved_at)));
+  resolvedItem.append(element("span", "detail-label", "해결 시각"), element("span", "", formatDate(incident.resolved_at)));
   metadata.append(severityItem, statusItem, createdItem, resolvedItem);
 
   const rawSection = element("section", "analysis-block");
-  rawSection.append(element("h3", "", "Original error"), element("pre", "raw-log", incident.raw_error));
+  rawSection.append(element("h3", "", "원본 오류"), element("pre", "raw-log", incident.raw_error));
 
   dialogContent.append(
     metadata,
     rawSection,
-    detailSection("Summary", incident.ai_summary),
-    detailSection("Possible causes", incident.possible_causes, true),
-    detailSection("Recommended actions", incident.recommended_actions, true),
+    detailSection("요약", incident.ai_summary),
+    detailSection("가능한 원인", incident.possible_causes, true),
+    detailSection("권장 해결 순서", incident.recommended_actions, true),
   );
 
   if (incident.status === "open") {
-    const resolveButton = element("button", "resolve-button", "Mark as resolved");
+    const resolveButton = element("button", "resolve-button", "해결됨으로 표시");
     resolveButton.type = "button";
     resolveButton.addEventListener("click", async () => {
       resolveButton.disabled = true;
-      resolveButton.textContent = "Resolving…";
+      resolveButton.textContent = "처리 중…";
       try {
         const updated = await apiRequest(`/incidents/${incident.id}`, {
           method: "PATCH",
@@ -183,8 +183,8 @@ function renderDialog(incident) {
         await loadHistory();
       } catch (error) {
         resolveButton.disabled = false;
-        resolveButton.textContent = "Try resolving again";
-        showError(historyError, `Could not resolve incident. ${error.message}`);
+        resolveButton.textContent = "다시 해결 처리하기";
+        showError(historyError, `인시던트를 해결 처리하지 못했습니다. ${error.message}`);
       }
     });
     dialogContent.append(resolveButton);
@@ -192,8 +192,8 @@ function renderDialog(incident) {
 }
 
 async function openIncident(id) {
-  dialogTitle.textContent = "Loading incident…";
-  dialogContent.replaceChildren(element("div", "history-loading", "Fetching details…"));
+  dialogTitle.textContent = "인시던트를 불러오는 중…";
+  dialogContent.replaceChildren(element("div", "history-loading", "상세 정보를 불러오는 중…"));
   if (!dialog.open) dialog.showModal();
   try {
     const incident = await apiRequest(`/incidents/${id}`);
@@ -210,13 +210,13 @@ form.addEventListener("submit", async (event) => {
   const serviceName = serviceInput.value.trim();
   const rawError = errorInput.value.trim();
   if (!serviceName || !rawError) {
-    showError(formError, "Enter both a service name and an error log before analyzing.");
+    showError(formError, "서비스명과 오류 로그를 모두 입력해 주세요.");
     return;
   }
 
   analyzeButton.disabled = true;
   analyzeButton.classList.add("loading");
-  analyzeButton.querySelector(".button-label").textContent = "Analyzing";
+  analyzeButton.querySelector(".button-label").textContent = "분석 중";
 
   try {
     const incident = await apiRequest("/incidents", {
@@ -227,11 +227,11 @@ form.addEventListener("submit", async (event) => {
     await loadHistory();
     analysisPanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
   } catch (error) {
-    showError(formError, `Analysis failed. ${error.message}`);
+    showError(formError, `오류 분석에 실패했습니다. ${error.message}`);
   } finally {
     analyzeButton.disabled = false;
     analyzeButton.classList.remove("loading");
-    analyzeButton.querySelector(".button-label").textContent = "Analyze incident";
+    analyzeButton.querySelector(".button-label").textContent = "오류 분석";
   }
 });
 
