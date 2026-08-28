@@ -20,6 +20,13 @@ function element(tag, className, text) {
   return node;
 }
 
+function bilingualLabel(tag, className, korean, english) {
+  const node = element(tag, className);
+  node.append(document.createTextNode(korean), element("span", "label-en", english));
+  node.querySelector(".label-en").lang = "en";
+  return node;
+}
+
 function showError(target, message) {
   target.textContent = message;
   target.hidden = false;
@@ -64,9 +71,9 @@ function appendList(parent, items) {
   parent.append(list);
 }
 
-function analysisBlock(title, content, isList = false) {
+function analysisBlock(title, englishTitle, content, isList = false) {
   const block = element("section", "analysis-block");
-  block.append(element("h3", "", title));
+  block.append(bilingualLabel("h3", "", title, englishTitle));
   if (isList) appendList(block, content);
   else block.append(element("p", "", content || "분석 결과가 없습니다."));
   return block;
@@ -84,9 +91,9 @@ function renderAnalysis(incident) {
 
   analysisPanel.append(
     header,
-    analysisBlock("요약", incident.ai_summary),
-    analysisBlock("가능한 원인", incident.possible_causes, true),
-    analysisBlock("권장 해결 순서", incident.recommended_actions, true),
+    analysisBlock("분석 요약", "Summary", incident.ai_summary),
+    analysisBlock("가능한 원인", "Possible Causes", incident.possible_causes, true),
+    analysisBlock("권장 조치", "Recommended Actions", incident.recommended_actions, true),
   );
 }
 
@@ -134,8 +141,8 @@ async function loadHistory() {
   }
 }
 
-function detailSection(title, content, isList = false) {
-  return analysisBlock(title, content, isList);
+function detailSection(title, englishTitle, content, isList = false) {
+  return analysisBlock(title, englishTitle, content, isList);
 }
 
 function renderDialog(incident) {
@@ -144,24 +151,24 @@ function renderDialog(incident) {
 
   const metadata = element("div", "detail-grid");
   const severityItem = element("div");
-  severityItem.append(element("span", "detail-label", "심각도"), severityBadge(incident.severity));
+  severityItem.append(bilingualLabel("span", "detail-label", "심각도", "Severity"), severityBadge(incident.severity));
   const statusItem = element("div");
-  statusItem.append(element("span", "detail-label", "상태"), statusBadge(incident.status));
+  statusItem.append(bilingualLabel("span", "detail-label", "상태", "Status"), statusBadge(incident.status));
   const createdItem = element("div");
-  createdItem.append(element("span", "detail-label", "생성 시각"), element("span", "", formatDate(incident.created_at)));
+  createdItem.append(bilingualLabel("span", "detail-label", "생성 시각", "Created"), element("span", "", formatDate(incident.created_at)));
   const resolvedItem = element("div");
-  resolvedItem.append(element("span", "detail-label", "해결 시각"), element("span", "", formatDate(incident.resolved_at)));
+  resolvedItem.append(bilingualLabel("span", "detail-label", "해결 시각", "Resolved"), element("span", "", formatDate(incident.resolved_at)));
   metadata.append(severityItem, statusItem, createdItem, resolvedItem);
 
   const rawSection = element("section", "analysis-block");
-  rawSection.append(element("h3", "", "원본 오류"), element("pre", "raw-log", incident.raw_error));
+  rawSection.append(bilingualLabel("h3", "", "원본 오류", "Original Error"), element("pre", "raw-log", incident.raw_error));
 
   dialogContent.append(
     metadata,
     rawSection,
-    detailSection("요약", incident.ai_summary),
-    detailSection("가능한 원인", incident.possible_causes, true),
-    detailSection("권장 해결 순서", incident.recommended_actions, true),
+    detailSection("분석 요약", "Summary", incident.ai_summary),
+    detailSection("가능한 원인", "Possible Causes", incident.possible_causes, true),
+    detailSection("권장 조치", "Recommended Actions", incident.recommended_actions, true),
   );
 
   if (incident.status === "open") {

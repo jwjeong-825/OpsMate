@@ -8,7 +8,7 @@
       content="OpsMate는 복잡한 오류 로그를 분석해 가능한 원인과 해결 방법을 정리합니다."
     />
     <title>OpsMate — AI Incident Assistant</title>
-    <link rel="stylesheet" href="./styles.css?v=5" />
+    <link rel="stylesheet" href="./styles.css?v=6" />
   </head>
   <body>
     <div class="page-shell">
@@ -17,13 +17,14 @@
           <span class="brand-mark" aria-hidden="true">O</span>
           <span>OpsMate</span>
         </a>
-        <span class="live-badge"><span></span> Xano backend 연결됨</span>
+        <span class="live-badge"><span></span> Xano backend <small>연결됨 · Connected</small></span>
       </header>
 
       <main id="top">
         <section class="hero">
           <div class="eyebrow">AI INCIDENT ASSISTANT</div>
           <h1>복잡한 에러 로그,<br /><em>OpsMate가 분석합니다.</em></h1>
+          <p class="hero-subtitle-en" lang="en">Turn complex error logs into clear, actionable insights.</p>
           <p>
             오류 로그를 입력하면 AI가 원인과 해결 방법을 분석하고,<br />
             대응에 필요한 핵심 내용을 정리해 드립니다.
@@ -35,13 +36,16 @@
             <div class="section-heading">
               <div>
                 <span class="step-number">01</span>
-                <h2>오류 분석</h2>
+                <div class="heading-copy">
+                  <h2>오류 분석</h2>
+                  <span class="en-label" lang="en">Analyze an Error</span>
+                </div>
               </div>
               <p>필수 입력</p>
             </div>
 
             <form id="incident-form" novalidate>
-              <label for="service-name">서비스명</label>
+              <label for="service-name">서비스명 <span class="label-en" lang="en">Service Name</span></label>
               <input
                 id="service-name"
                 name="service_name"
@@ -51,7 +55,10 @@
                 required
               />
 
-              <label for="raw-error">오류 로그 또는 인시던트 설명</label>
+              <label for="raw-error">
+                오류 로그 또는 인시던트 설명
+                <span class="label-en" lang="en">Error Log or Incident Description</span>
+              </label>
               <textarea
                 id="raw-error"
                 name="raw_error"
@@ -75,6 +82,7 @@
               <span></span><span></span><span></span>
             </div>
             <h2>분석 결과가 여기에 표시됩니다</h2>
+            <span class="en-label empty-en" lang="en">Analysis results will appear here</span>
             <p>오류 로그를 입력하면 이해하기 쉬운 설명과 해결 순서를 확인할 수 있습니다.</p>
           </div>
         </section>
@@ -83,7 +91,10 @@
           <div class="section-heading history-heading">
             <div>
               <span class="step-number">02</span>
-              <h2 id="history-title">인시던트 기록</h2>
+              <div class="heading-copy">
+                <h2 id="history-title">인시던트 기록</h2>
+                <span class="en-label" lang="en">Incident History</span>
+              </div>
             </div>
           </div>
 
@@ -96,7 +107,10 @@
 
       <footer>
         <span>OpsMate</span>
-        <p>DevNetwork Hackathon 2026을 위해 Xano + AI로 만들었습니다.</p>
+        <p class="footer-copy">
+          <span>DevNetwork Hackathon 2026을 위해 Xano + AI로 만들었습니다.</span>
+          <small lang="en">Built with Xano + AI for DevNetwork Hackathon 2026.</small>
+        </p>
       </footer>
     </div>
 
@@ -111,6 +125,6 @@
       <div id="dialog-content"></div>
     </dialog>
 
-    <script src="./app.js?v=3" defer></script>
+    <script src="./app.js?v=4" defer></script>
   </body>
 </html>
