@@ -51,6 +51,42 @@ OpsMate는 범용 LLM을 대체하려는 서비스가 아닙니다. ChatGPT와 �
 - Xano Static Hosting을 통한 공개 배포
 - Xano의 입력 검증, `404` 응답, AI 출력 검증
 
+## 실행 화면
+
+스크린샷은 `Input → AI Analysis → Persistent Incident → Resolution Tracking`으로 이어지는 실제 Production 흐름을 보여줍니다.
+
+### 1. OpsMate Overview
+
+오류 입력 영역과 Incident History를 한 화면에서 확인할 수 있는 초기 Production 화면입니다.
+
+<p align="center">
+  <img src="docs/images/opsmate-overview.png" alt="OpsMate Production overview with error input and Incident History" width="900" />
+</p>
+
+### 2. AI Incident Analysis
+
+`inventory-api`의 Redis connection timeout을 입력한 뒤 Summary, Possible Causes, Recommended Actions, Severity가 구조화되어 표시된 화면입니다.
+
+<p align="center">
+  <img src="docs/images/ai-analysis-result.png" alt="OpsMate AI analysis result for an inventory-api Redis timeout" width="900" />
+</p>
+
+### 3. Persistent Incident Detail
+
+History에 저장된 `inventory-api` Incident를 다시 조회한 화면으로, Original Error와 저장된 AI 분석 결과, OPEN 상태를 보여줍니다.
+
+<p align="center">
+  <img src="docs/images/incident-detail-open.png" alt="Persisted inventory-api Incident detail in OPEN status" width="520" />
+</p>
+
+### 4. Resolved Incident
+
+같은 Incident를 RESOLVED로 변경한 뒤 해결 시각이 `resolved_at`에 기록된 화면입니다.
+
+<p align="center">
+  <img src="docs/images/incident-detail-resolved.png" alt="Resolved inventory-api Incident with resolved_at timestamp" width="520" />
+</p>
+
 ## 아키텍처
 
 ```mermaid
